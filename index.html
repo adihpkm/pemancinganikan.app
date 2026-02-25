@@ -4,47 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pemancingan Ikan</title>
-
-  <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1nAal3Yqeqbyv_A5Wtqdl-aSgBqmG3GFN" />
   
-  <link rel="apple-touch-icon" sizes="180x180" href="https://drive.google.com/thumbnail?id=1nAal3Yqeqbyv_A5Wtqdl-aSgBqmG3GFN" />
-  <link rel="icon" sizes="192x192" href="https://drive.google.com/thumbnail?id=1nAal3Yqeqbyv_A5Wtqdl-aSgBqmG3GFN" />
+  <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1nAal3Yqeqbyv_A5Wtqdl-aSgBqmG3GFN" />
 
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #eee;
-      overflow: hidden; /* Mencegah scroll ganda */
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      background-color: #eee; overflow: hidden;
+      font-family: sans-serif;
     }
-
     .iframe-container {
-      width: 100%;
-      height: 100dvh; /* Menggunakan dvh agar pas di mobile browser */
-      overflow: hidden;
+      width: 100%; height: 100dvh; position: relative;
     }
-
     iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: none;
+      display: block; width: 100%; height: 100%; border: none;
+      opacity: 0; transition: opacity 0.5s ease-in; /* Efek muncul perlahan */
     }
+    /* Gaya untuk Loading Spinner */
+    #loader {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #555;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+      border-radius: 50%; width: 40px; height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px auto;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+
   <div class="iframe-container">
+    <div id="loader">
+      <div class="spinner"></div>
+      <p>Memuat Data Pemancingan...</p>
+    </div>
+
     <iframe
       id="app"
       src="https://script.google.com/macros/s/AKfycbwdROq096V0DJFOvtVVGJyXsNMxR5DYhCIviC9hk62oUMc2A1ITtERql_e5mSDz3lO7-g/exec"
       scrolling="yes"
       allowfullscreen="true"
-      webkitallowfullscreen="true"
-      mozallowfullscreen="true"
-      allow="fullscreen; camera; microphone; display-capture; geolocation;">
+      allow="fullscreen; camera; microphone; display-capture; geolocation;"
+      onload="hideLoader()">
     </iframe>
   </div>
+
+  <script>
+    // Fungsi untuk menghilangkan loading saat iframe selesai dimuat
+    function hideLoader() {
+      const loader = document.getElementById('loader');
+      const iframe = document.getElementById('app');
+      
+      // Sembunyikan loader
+      loader.style.display = 'none';
+      // Tampilkan iframe
+      iframe.style.opacity = '1';
+    }
+  </script>
 </body>
 </html>
